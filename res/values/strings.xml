@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Event Notifier</string>
+    <string name="no_events">No Events Yet</string>
+    <string name="menu_insert">Add Event</string>
+    <string name="menu_delete">Delete Event</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="confirm">Confirm</string>
+    <string name="edit_event">Edit Event</string>
+</resources>
