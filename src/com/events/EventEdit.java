@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 public class EventEdit extends Activity {
 	////////////////////////////////////////////////////////////////////////////////////////////
-    private TextView mDateDisplay;    
     private Button mPickDate;    
     private int mYear;    
     private int mMonth;    
@@ -44,8 +43,7 @@ public class EventEdit extends Activity {
         mDateText = (EditText) findViewById(R.id.date);
         mTimeText = (EditText) findViewById(R.id.time);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     // capture our View elements        
-        mDateDisplay = (TextView) findViewById(R.id.dateDisplay);        
+     // capture our View elements              
         mPickDate = (Button) findViewById(R.id.pickDate);
         
      // add a click listener to the button
@@ -92,7 +90,7 @@ public class EventEdit extends Activity {
             startManagingCursor(event);
             mTitleText.setText(event.getString(
                     event.getColumnIndexOrThrow(EventsDbAdapter.KEY_TITLE)));
-            mDateText.setText(event.getString(
+            mPickDate.setText(event.getString(
                     event.getColumnIndexOrThrow(EventsDbAdapter.KEY_DATE)));
             mTimeText.setText(event.getString(
                     event.getColumnIndexOrThrow(EventsDbAdapter.KEY_TIME)));
@@ -120,7 +118,7 @@ public class EventEdit extends Activity {
 
     private void saveState() {
         String title = mTitleText.getText().toString();
-        String date = mDateText.getText().toString();
+        String date = mPickDate.getText().toString();
         String time = mTimeText.getText().toString();
 
         if (mRowId == null) {
@@ -135,7 +133,7 @@ public class EventEdit extends Activity {
 
  // updates the date in the TextView    
     private void updateDisplay() {        
-    	mDateDisplay.setText(     
+    	mPickDate.setText(     
     			new StringBuilder()                    
     			// Month is 0 based so add 1                    
     			.append(mMonth + 1).append("-")                    

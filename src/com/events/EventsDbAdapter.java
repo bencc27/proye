@@ -131,7 +131,7 @@ public class EventsDbAdapter {
     public Cursor fetchAllEvents() {
 
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_DATE, KEY_TIME}, null, null, null, null, null);
+                KEY_DATE, KEY_TIME}, null, null, null, null, KEY_DATE+", "+KEY_TIME);
     }
 
     /**
