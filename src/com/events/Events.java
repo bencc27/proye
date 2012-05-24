@@ -39,10 +39,10 @@ public class Events extends ListActivity {
         startManagingCursor(eventsCursor);
 
         // Create an array to specify the fields we want to display in the list (only TITLE)
-        String[] from = new String[]{EventsDbAdapter.KEY_TITLE};
+        String[] from = new String[]{EventsDbAdapter.KEY_TITLE, EventsDbAdapter.KEY_DATE, EventsDbAdapter.KEY_TIME};
 
         // and an array of the fields we want to bind those fields to (in this case just text1)
-        int[] to = new int[]{R.id.text1};
+        int[] to = new int[]{R.id.text1, R.id.text2, R.id.text3};
 
         // Now create a simple cursor adapter and set it to display
         SimpleCursorAdapter events = 

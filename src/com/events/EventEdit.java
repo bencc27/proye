@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 
 
@@ -26,7 +25,6 @@ public class EventEdit extends Activity {
     static final int DATE_DIALOG_ID = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     private EditText mTitleText;
-    private EditText mDateText;
     private EditText mTimeText;
     private Long mRowId;
     private EventsDbAdapter mDbHelper;
@@ -40,7 +38,6 @@ public class EventEdit extends Activity {
         setContentView(R.layout.event_edit);
         setTitle(R.string.edit_event);
         mTitleText = (EditText) findViewById(R.id.title);
-        mDateText = (EditText) findViewById(R.id.date);
         mTimeText = (EditText) findViewById(R.id.time);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
      // capture our View elements              
@@ -136,9 +133,9 @@ public class EventEdit extends Activity {
     	mPickDate.setText(     
     			new StringBuilder()                    
     			// Month is 0 based so add 1                    
-    			.append(mMonth + 1).append("-")                    
-    			.append(mDay).append("-")                    
-    			.append(mYear).append(" "));    
+    			.append(mYear).append("/") 
+    			.append(mMonth + 1).append("/")
+    			.append(mDay).append(" "));    
     	}
     
     // the callback received when the user "sets" the date in the dialog    
