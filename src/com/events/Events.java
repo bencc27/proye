@@ -1,26 +1,33 @@
 package com.events;
 
 
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+
 
 public class Events extends ListActivity {
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
+    private static final int ACTIVITY_AUTORES=2;
+    private static final int ACTIVITY_AYUDA=3;
+
 
     private static final int INSERT_ID = Menu.FIRST;
     private static final int DELETE_ID = Menu.FIRST + 1;
-
+    private static final int AUTORES_ID = Menu.FIRST + 2;
+    private static final int AYUDA_ID = Menu.FIRST + 3;
+    
     private EventsDbAdapter mDbHelper;
 
     /** Called when the activity is first created. */
@@ -54,6 +61,8 @@ public class Events extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         menu.add(0, INSERT_ID, 0, R.string.menu_insert);
+        menu.add(0, AUTORES_ID, 0, R.string.titulo_autores);
+        menu.add(0, AYUDA_ID, 0, R.string.titulo_ayuda);
         return true;
     }
 
@@ -62,6 +71,12 @@ public class Events extends ListActivity {
         switch(item.getItemId()) {
             case INSERT_ID:
                 createEvent();
+                return true;
+            case AUTORES_ID:
+                lanzarAutores();
+                return true;
+            case AYUDA_ID:
+                lanzarAyuda();
                 return true;
         }
 
@@ -90,6 +105,16 @@ public class Events extends ListActivity {
     private void createEvent() {
         Intent i = new Intent(this, EventEdit.class);
         startActivityForResult(i, ACTIVITY_CREATE);
+    }
+    
+    private void lanzarAutores() {
+        Intent i = new Intent(this, MostrarAutores.class);
+        startActivityForResult(i, ACTIVITY_AUTORES);
+    }
+    
+    private void lanzarAyuda() {
+        Intent i = new Intent(this, MostrarAyuda.class);
+        startActivityForResult(i, ACTIVITY_AYUDA);
     }
 
     @Override

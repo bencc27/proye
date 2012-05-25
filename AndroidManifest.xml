@@ -8,5 +8,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".EventEdit" />
+        <activity android:name=".MostrarAutores"/>
+        <activity android:name=".MostrarAyuda"/>
     </application>
 </manifest> 

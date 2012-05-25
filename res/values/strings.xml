@@ -9,4 +9,22 @@
     <string name="time">Time</string>
     <string name="confirm">Confirm</string>
     <string name="edit_event">Edit Event</string>
+    <string name="autores_1">Event Notifier</string>
+    <string name="autores_2">Para programar tus actividades diarias</string>
+    <string name="autores_3">Autores: Daniel Carpintero Morales \n David García Regodón</string>
+    <string name="ayuda">	Con esta aplicación puedes crear recordatorios de préstamos que hagas a diferentes personas.\n\n\n
+    						Desde la vista principal, pulsa menú para añadir un nuevo préstamo, para ver la ayuda o el acerca de.\n\n
+    						Al pulsar en "Nuevo préstamo", una vista de edición de préstamo se abrirá.\n\n
+    						En la vista de edición de préstamo, debes rellenar al menos nombre, y ambas fechas para poder guardar el préstamo.\n\n
+    						En el cuadro de texto del nombre, puedes rellenarlo a mano, haciendo un click simple sobre el mismo, o acceder a la lista de contactos
+    						y rellenarlo automáticamente. Para ello haz un click largo sobre el recuadro, o pulsa el botón correspondiente. \n\n
+    						En el cuadro de texto de ambas fechas, que aparecen con la fecha actual de forma automática, se aplica lo mismo que en el caso anterior,
+    						si quieres puedes hacer que se rellene automáticamente seleccionando la fecha en un selector de fecha. \n\n
+    						Por último, puedes editar y borrar cada préstamo desde la lista de préstamos sin más que hacer un click largo sobre el préstamo deseado. \n
+    						La aplicación te avisará, cada vez que muestre la lista de préstamos, si tienes algún préstamo que venza en el día de hoy, mediante 
+    						notificación en la barra de notificaciones. En caso de tener varios préstamos en esa situación, te avisará del primero de ellos. \n\n
+    						¡¡Estamos mejorando la aplicación para que puedas ordenar tu lista de préstamos como más te apetezca!! \n\n</string>
+    <string name="titulo_autores">Acerca de</string>
+    <string name="titulo_ayuda">Ayuda</string>
+    <string name="error_tiempo">No puede crear un evento con fecha anterior a día de hoy, o con día de hoy y hora ya pasada.</string>
 </resources>
