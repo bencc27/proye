@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 
 
@@ -27,7 +29,10 @@ public class EventEdit extends Activity {
     private Calendar c = Calendar.getInstance();   
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     private EditText mTitleText;
-    private EditText mTimeText;
+    private Button mTimeText;
+    private int mHour;
+    private int mMinute;
+    static final int TIME_DIALOG_ID=1;
     private Long mRowId;
     private EventsDbAdapter mDbHelper;
     private AlertDialog.Builder mBuilder;
@@ -41,7 +46,7 @@ public class EventEdit extends Activity {
         setContentView(R.layout.event_edit);
         setTitle(R.string.edit_event);
         mTitleText = (EditText) findViewById(R.id.title);
-        mTimeText = (EditText) findViewById(R.id.time);
+        mTimeText = (Button) findViewById(R.id.time);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
      // capture our View elements              
         mPickDate = (Button) findViewById(R.id.pickDate);
@@ -52,12 +57,20 @@ public class EventEdit extends Activity {
         		showDialog(DATE_DIALOG_ID);            
         		}        
         	});
-        
+        mTimeText.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDialog(TIME_DIALOG_ID);
+            }
+        });
+
         // get the current date     
         mYear = c.get(Calendar.YEAR);        
         mMonth = c.get(Calendar.MONTH);        
-        mDay = c.get(Calendar.DAY_OF_MONTH);       
-        
+        mDay = c.get(Calendar.DAY_OF_MONTH); 
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        // display the current time
+        updateDisplayTime();
         // display the current date (this method is below)        
         updateDisplay();
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,8 +93,9 @@ public class EventEdit extends Activity {
                 //finish();
                 String nombre = mTitleText.getText().toString();
                 String fechainic = mPickDate.getText().toString();
+                String timeFin= mTimeText.getText().toString();
                 if (((nombre != null) && (!nombre.equals(""))) && ((fechainic != null) && 
-                		(!fechainic.equals(""))))  {     
+                		(!fechainic.equals(""))) && ((timeFin!=null)&&(!timeFin.equals(""))))  {     
                 	if (comprobarFechas())
                 		finish();
                 	else {
@@ -100,7 +114,7 @@ public class EventEdit extends Activity {
     
     private void createDialog() {
 		mBuilder = new AlertDialog.Builder(this);
-		mBuilder.setMessage("Atención! Los datos no están completos. Revisa el nombre, descripción, y fechas. " +
+		mBuilder.setMessage("¡Cuidado! Estas dejando datos en blanco. " +
 				"Si sales perderás los datos. ¿Quieres continuar de todas formas? ")
 		       .setCancelable(false)
 		       .setPositiveButton("Sí, quiero continuar", new DialogInterface.OnClickListener() {
@@ -173,6 +187,21 @@ public class EventEdit extends Activity {
     			.append(mDay).append(" "));    
     	}
     
+ // updates the time we display in the TextView
+    private void updateDisplayTime() {
+        mTimeText.setText(
+            new StringBuilder()
+                    .append(pad(mHour)).append(":")
+                    .append(pad(mMinute)));
+    }
+
+    private static String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else
+            return "0" + String.valueOf(c);
+    }
+    
     // the callback received when the user "sets" the date in the dialog    
     private DatePickerDialog.OnDateSetListener mDateSetListener =  new DatePickerDialog.OnDateSetListener() {                
     	public void onDateSet(DatePicker view, int year,                                       
@@ -184,11 +213,25 @@ public class EventEdit extends Activity {
     		}            
     	};
     	
+    	
+    	// the callback received when the user "sets" the time in the dialog
+    	private TimePickerDialog.OnTimeSetListener mTimeSetListener =
+    	    new TimePickerDialog.OnTimeSetListener() {
+    	        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    	            mHour = hourOfDay;
+    	            mMinute = minute;
+    	            updateDisplayTime();
+    	        }
+    	    };
+    	    
 	@Override
 	protected Dialog onCreateDialog(int id) {    
 		switch (id) {    
 		case DATE_DIALOG_ID:        
-			return new DatePickerDialog(this,mDateSetListener, mYear, mMonth, mDay);    
+			return new DatePickerDialog(this,mDateSetListener, mYear, mMonth, mDay);   
+		case TIME_DIALOG_ID:
+	        return new TimePickerDialog(this,
+	                mTimeSetListener, mHour, mMinute, false);
 		}    
 		return null;
 	}
@@ -211,7 +254,13 @@ public class EventEdit extends Activity {
     	
     	else if (mMonth ==  c.get(Calendar.MONTH) && mDay <  c.get(Calendar.DAY_OF_MONTH))
     		return false;
-    		
+    	
+    	else if ( mDay == c.get(Calendar.DAY_OF_MONTH) && mHour <  c.get(Calendar.HOUR_OF_DAY))
+    		return false;
+    	
+    	else if (mHour == c.get(Calendar.HOUR_OF_DAY) && mMinute <  c.get(Calendar.MINUTE))
+    		return false;
+    	
     	return true;
     }
 }

@@ -2,7 +2,10 @@ package com.events;
 
 
 
+
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,6 +32,8 @@ public class Events extends ListActivity {
     private static final int AYUDA_ID = Menu.FIRST + 3;
     
     private EventsDbAdapter mDbHelper;
+    private AlertDialog.Builder mBuilder;
+    private MenuItem mItem;
 
     /** Called when the activity is first created. */
     @Override
@@ -88,16 +93,24 @@ public class Events extends ListActivity {
             ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+        menu.add(0, INSERT_ID, 0, R.string.edit_event);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case DELETE_ID:
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                mDbHelper.deleteEvent(info.id);
-                fillData();
+            	mItem=item;
+            	createDialog();
+            	AlertDialog alert = mBuilder.create();
+            	alert.show();  
                 return true;
+            case INSERT_ID:
+            	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+            	Intent i = new Intent(this, EventEdit.class);
+                i.putExtra(EventsDbAdapter.KEY_ROWID, info.id);
+                startActivityForResult(i, ACTIVITY_EDIT);
+            	return true;
         }
         return super.onContextItemSelected(item);
     }
@@ -130,4 +143,22 @@ public class Events extends ListActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         fillData();
     }
+    
+    private void createDialog() {
+		mBuilder = new AlertDialog.Builder(this);
+		mBuilder.setMessage("¿Estás seguro de borrar esta entrada?")
+		       .setCancelable(false)
+		       .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	 AdapterContextMenuInfo info = (AdapterContextMenuInfo) mItem.getMenuInfo();
+		             mDbHelper.deleteEvent(info.id);
+		             fillData();
+		           }
+		       })
+		       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });	
+	}
 }

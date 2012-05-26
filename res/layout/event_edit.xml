@@ -14,7 +14,8 @@
 		<EditText android:id="@+id/title" 
 		  android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:layout_weight="1"/>
+			android:layout_weight="1"
+			/>
 	</LinearLayout>
 
 	<TextView android:layout_width="wrap_content"
@@ -25,20 +26,13 @@
         android:layout_height="wrap_content"/>
     
 	
-	<EditText android:id="@+id/date" 
-	    android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1"
-		android:scrollbars="vertical" />
-	
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
 		android:text="@string/time" />
-	<EditText android:id="@+id/time" 
-	    android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1"
-		android:scrollbars="vertical" />
+	
+	<Button android:id="@+id/time"        
+        android:layout_width="wrap_content"        
+        android:layout_height="wrap_content"/>
 	
 	<Button android:id="@+id/confirm" 
 	  android:text="@string/confirm"
