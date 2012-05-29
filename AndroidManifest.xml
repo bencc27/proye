@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.events">
+<permission android:name="android.permission.READ_CONTACTS"></permission>
+<uses-permission android:name="android.permission.READ_CONTACTS" />
     <application android:icon="@drawable/icon">
         <activity android:name=".Events" android:label="@string/app_name">
             <intent-filter>
@@ -10,5 +12,6 @@
         <activity android:name=".EventEdit" />
         <activity android:name=".MostrarAutores"/>
         <activity android:name=".MostrarAyuda"/>
+        <service android:name=".Notificacion" />
     </application>
 </manifest> 

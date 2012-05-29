@@ -16,12 +16,14 @@ public final class R {
         public static final int notification_icon=0x7f020002;
     }
     public static final class id {
-        public static final int confirm=0x7f050003;
-        public static final int pickDate=0x7f050001;
-        public static final int text1=0x7f050004;
-        public static final int text2=0x7f050005;
-        public static final int text3=0x7f050006;
-        public static final int time=0x7f050002;
+        public static final int confirm=0x7f050005;
+        public static final int contact=0x7f050001;
+        public static final int contact_list=0x7f050002;
+        public static final int pickDate=0x7f050003;
+        public static final int text1=0x7f050006;
+        public static final int text2=0x7f050007;
+        public static final int text3=0x7f050008;
+        public static final int time=0x7f050004;
         public static final int title=0x7f050000;
     }
     public static final class layout {
@@ -34,20 +36,21 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int autores_1=0x7f040009;
-        public static final int autores_2=0x7f04000a;
-        public static final int autores_3=0x7f04000b;
-        public static final int ayuda=0x7f04000c;
-        public static final int confirm=0x7f040007;
-        public static final int date=0x7f040005;
-        public static final int edit_event=0x7f040008;
-        public static final int error_tiempo=0x7f04000f;
+        public static final int autores_1=0x7f04000a;
+        public static final int autores_2=0x7f04000b;
+        public static final int autores_3=0x7f04000c;
+        public static final int ayuda=0x7f04000d;
+        public static final int confirm=0x7f040008;
+        public static final int contact=0x7f040005;
+        public static final int date=0x7f040006;
+        public static final int edit_event=0x7f040009;
+        public static final int error_tiempo=0x7f040010;
         public static final int menu_delete=0x7f040003;
         public static final int menu_insert=0x7f040002;
         public static final int no_events=0x7f040001;
-        public static final int time=0x7f040006;
+        public static final int time=0x7f040007;
         public static final int title=0x7f040004;
-        public static final int titulo_autores=0x7f04000d;
-        public static final int titulo_ayuda=0x7f04000e;
+        public static final int titulo_autores=0x7f04000e;
+        public static final int titulo_ayuda=0x7f04000f;
     }
 }
