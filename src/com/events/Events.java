@@ -3,8 +3,17 @@ package com.events;
 
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,10 +39,13 @@ public class Events extends ListActivity {
     private static final int DELETE_ID = Menu.FIRST + 1;
     private static final int AUTORES_ID = Menu.FIRST + 2;
     private static final int AYUDA_ID = Menu.FIRST + 3;
+    private static final int HELLO_ID = 1;
     
     private EventsDbAdapter mDbHelper;
     private AlertDialog.Builder mBuilder;
     private MenuItem mItem;
+    private int mRowIdVencido;
+    private NotificationManager mNotificationManager;
 
     /** Called when the activity is first created. */
     @Override
@@ -44,6 +56,7 @@ public class Events extends ListActivity {
         mDbHelper.open();
         fillData();
         registerForContextMenu(getListView());
+        if (comprobarVencimiento()) lanzarNotificacion();
     }
 
     private void fillData() {
@@ -161,4 +174,63 @@ public class Events extends ListActivity {
 		           }
 		       });	
 	}
+    
+	private void lanzarNotificacion() {
+		  String ns = Context.NOTIFICATION_SERVICE;
+		  mNotificationManager = (NotificationManager) getSystemService(ns);
+		  int icon = R.drawable.notification_icon;
+		  CharSequence tickerText = "Préstamos";
+		  long when = System.currentTimeMillis();
+
+		  Notification notification = new Notification(icon, tickerText, when);
+		  
+		  Context context = getApplicationContext();
+		  CharSequence contentTitle = "Préstamos";
+		  
+		  Cursor prestamo = mDbHelper.fetchAllEvents();
+		  startManagingCursor(prestamo);
+		  prestamo.moveToPosition(mRowIdVencido);
+		  CharSequence contentText = "¡Hoy vence tu préstamo con " + prestamo.getString(
+                prestamo.getColumnIndexOrThrow(EventsDbAdapter.KEY_TITLE)) + "!";
+		  
+		  Intent notificationIntent = new Intent(this, Notificacion.class);
+		  PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+		  notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		  
+		  
+
+		  mNotificationManager.notify(HELLO_ID, notification);
+	}
+	
+	private boolean comprobarVencimiento() {
+		Cursor prestamo = mDbHelper.fetchAllEvents();
+      startManagingCursor(prestamo);
+      while (prestamo.moveToNext()) {
+      Date ahora = new Date();
+      Date fechaPrestamo = convertToDate(prestamo.getString(prestamo.getColumnIndexOrThrow(EventsDbAdapter.KEY_DATE)));
+      if (ahora.getDay() == fechaPrestamo.getDay()     && 
+      	ahora.getMonth() == fechaPrestamo.getMonth() && 
+      	ahora.getYear() == fechaPrestamo.getYear()) {
+      	mRowIdVencido = prestamo.getPosition();
+      	return true;
+      }
+      }
+      
+		return false;
+	}
+	
+	private Date convertToDate(String dateString) { 
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("y/M/d"); 
+
+		Date convertedDate; 
+		try { 
+		convertedDate = dateFormat.parse(dateString); 
+		} 
+		catch (ParseException e) { 
+		return null; 
+		}
+		return convertedDate; 
+		} 
 }
